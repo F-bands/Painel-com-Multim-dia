@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compare seu Painel</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+    header {
+      background-color: #002d72;
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .logo {
+      display: block;
+      margin: 0 auto 1rem auto;
+      max-width: 180px;
+      width: 100%;
+    }
+    .container {
+      max-width: 95%;
+      margin: 2rem auto;
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #002d72;
+      font-size: 1.2rem;
+      text-align: center;
+    }
+    .upload-section {
+      margin-top: 2rem;
+      text-align: center;
+    }
+    input[type="file"] {
+      margin-top: 1rem;
+    }
+    .preview {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    .preview img {
+      max-width: 90%;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+    }
+    button {
+      margin-top: 1rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 0.7rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .note {
+      font-size: 0.9rem;
+      color: gray;
+      margin-top: 1rem;
+      text-align: center;
+    }
+    .counter {
+      margin-top: 1.5rem;
+      text-align: center;
+      font-weight: bold;
+      color: #002d72;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="Logo azul png.png" alt="Logo Ecarshop" class="logo">
+    <h1 style="font-size: 1.5rem;">Veja como seu carro pode se transformar</h1>
+    <p style="font-size: 1rem;">Enquanto a Pioneer entrega som, nós entregamos todo o resto.</p>
+  </header>
+
+  <div class="container">
+    <h2>Envie uma foto do painel do seu carro</h2>
+    <p style="text-align:center">Mostramos como ficará com a nossa Central Multimídia Android 4-64GB.</p>
+
+    <div class="upload-section">
+      <input type="file" id="upload" accept="image/*">
+      <br>
+      <button onclick="generateMockup()">Visualizar Transformação</button>
+    </div>
+
+    <div class="preview" id="preview"></div>
+
+    <p class="note">* Imagem simulada. Para ilustração apenas. Resultado pode variar de acordo com o modelo do veículo.</p>
+
+    <div class="counter">
+      Visitantes nesta página: <span id="visit-count">0</span>
+    </div>
+  </div>
+
+  <script>
+    function generateMockup() {
+      const upload = document.getElementById('upload');
+      const preview = document.getElementById('preview');
+      preview.innerHTML = '';
+
+      if (upload.files.length > 0) {
+        const file = upload.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+          const original = document.createElement('img');
+          original.src = e.target.result;
+          original.alt = "Painel original";
+
+          const mockup = document.createElement('img');
+          mockup.src = "https://via.placeholder.com/300x180?text=Painel+com+Multim%C3%ADdia";
+          mockup.alt = "Painel com multimídia";
+
+          preview.appendChild(original);
+          preview.appendChild(mockup);
+        }
+
+        reader.readAsDataURL(file);
+      } else {
+        alert("Por favor, selecione uma imagem do seu painel.");
+      }
+    }
+
+    let count = localStorage.getItem('visitCount') || 0;
+    count++;
+    localStorage.setItem('visitCount', count);
+    document.getElementById('visit-count').innerText = count;
+  </script>
+</body>
+</html>
